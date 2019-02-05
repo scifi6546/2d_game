@@ -66,8 +66,6 @@ int init(){
         lastTime=current_time;
 
         player_pos = GameWorld->tick(temp_move,deltaT);
-
-        GameWorld->setBlock(rand()/100,rand()/200,rand()/100,AIR);
         rManager::drawFrame();
     }
     delDisplay();

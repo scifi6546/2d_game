@@ -3,6 +3,7 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 namespace physics{
+
     const float slideConst = 0.7f;
     const float collideDist = 0.4f;//distance of collision
     const float playerMoveSpeed = 0.2f;

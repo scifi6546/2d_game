@@ -1,6 +1,7 @@
 #include "physics.h"
 glm::vec3 stored_velocity=glm::vec3(0.0f,0.0f,0.0f);
 glm::vec3 physics::runFrame(glm::vec3 player_pos, glm::vec3 player_v, World * gameWorld, float deltaT){
+    /*
     stored_velocity += player_v*playerMoveSpeed+physics::gravity;
     //limits velocity
     glm::vec3 tempmove = stored_velocity*deltaT;
@@ -96,4 +97,6 @@ glm::vec3 physics::runFrame(glm::vec3 player_pos, glm::vec3 player_v, World * ga
         }
     }
     return player_pos;
+    */
+   return player_pos;
 }
