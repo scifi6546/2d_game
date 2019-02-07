@@ -8,12 +8,20 @@
 #include "texture.h"
 #include "error.h"
 
-void Model::add(Model to_add,glm::vec3 pos){
+void Model::add(Model to_add,glm::vec3 pos,int textureNum){
+    int numTextures = getNumTextures();
     this->pos.reserve(this->pos.size()+to_add.pos.size());
     this->texCoord.reserve(this->texCoord.size()+to_add.texCoord.size());
+    if(this->pos.size()==0){
+        
+    }
     for(int i =0;i<to_add.pos.size();i++){
         this->pos.push_back(to_add.pos[i]+pos);
-        this->texCoord.push_back(to_add.texCoord[i]);
+        
+        glm::vec2 temp = to_add.texCoord[i];
+        temp.y+=(float) textureNum;
+        temp.y/=(float) numTextures;
+        this->texCoord.push_back(temp);
     }
     int size = this->pos.size();
     for(int i =0;i<to_add.indices.size();i++){
@@ -22,6 +30,7 @@ void Model::add(Model to_add,glm::vec3 pos){
     for(int i =0;i<to_add.normal.size();i++){
         this->normal.push_back(to_add.normal[i]);
     }
+
 }
 std::vector<unsigned int> numIndicies;
 std::vector<RunTimeModel> initMesh(std::vector<Model> models){

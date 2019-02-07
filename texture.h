@@ -6,5 +6,5 @@
 void genTexture(std::vector<std::string> filename);
 void bindTexture(unsigned int unit);
 void delTexture();
-
+int getNumTextures();
 #endif

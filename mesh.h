@@ -23,7 +23,8 @@ class Model{
                 
                 
         }
-        void add(Model to_add,glm::vec3 pos);
+        //adds mesh to model textureNum zero indexed
+        void add(Model to_add,glm::vec3 pos,int textureNum);
         Model(){
 
         }

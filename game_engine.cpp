@@ -31,7 +31,7 @@ World *GameWorld;
 int lastTime = 0;
 int init(){
     float dist = 10.0f;
-    player_pos=glm::vec3(0.1f,150.0f,0.1f);
+    player_pos=glm::vec3(16.0f,400.0f,16.0f);
     initDisplay(display_width,display_height,"temp_title");
 
     
@@ -40,8 +40,9 @@ int init(){
     initCam(60.0,display_width,display_height,.01,500);
 
     std::vector<std::string> textures;
-    textures.push_back("./textures/total.png");
-    textures.push_back("./textures/water.png");
+    textures.push_back("./textures/grass.png");
+    textures.push_back("./textures/rock.png");
+    //textures.push_back("./textures/water.png");
     genTexture(textures);
     clearDisplay(0.0,.1,.6,1.0);
     temp_trans = glm::vec3(0.0f,0.0f,0.0f);
@@ -55,7 +56,12 @@ int init(){
 
     // game loop
     lastTime=SDL_GetTicks();
+    float x=M_PI/2;
+    float y = 0.0;
     while(!isclosed()){
+        //y+=0.01;
+        //printf("x: %f y: %f\n",x,y);
+        rotate_cam(x,y);
         glm::vec3 temp_move = event();
         int current_time = SDL_GetTicks();
         float deltaT = current_time - lastTime;
@@ -75,7 +81,7 @@ void draw(){
 	
     translateCam(player_pos);
         glError = glGetError();
-        clearDisplay(0.0,.1,.6,1.0);
+        clearDisplay(0.2,0.2,0.2,0.0);
          glError = glGetError();
         
         glError = glGetError();
@@ -87,7 +93,7 @@ void draw(){
         if(glError!=0){
             printf("Error %i\n",glError);
         }
-        resetMouse(display_width,display_height);
+        //resetMouse(display_width,display_height);
         //temp_chunk.draw();
        
 }
@@ -116,5 +122,5 @@ glm::vec3 engineKeyboardEvent(char key,bool is_down){
 }
 
 void engineMouseEvent(int x_rel, int y_rel){
-    rotate_cam(y_rel*mouse_move_speed,x_rel*mouse_move_speed);
+    //rotate_cam(y_rel*mouse_move_speed,x_rel*mouse_move_speed);
 }

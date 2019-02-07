@@ -36,7 +36,7 @@ void initCam(GLfloat fov,GLfloat width, GLfloat height, GLfloat near, GLfloat fa
     cam_pos = glm::vec3(0.0f,0.0f,0.0f);
     printf("fov = %f , width = %f, height = %f, near = %f, far = %f\n",fov,width,height,near,far);
     projection=glm::mat4(1.0f);
-    projection = glm::perspective(glm::radians(fov),width/height,near,far);
+        projection = glm::perspective(glm::radians(fov),width/height,near,far);
 
     printf("projection \n%s",makeString(projection).c_str());
     sendCamera(projection);
@@ -46,11 +46,10 @@ void initCam(GLfloat fov,GLfloat width, GLfloat height, GLfloat near, GLfloat fa
 
     INT_look();
     printf("look at = \n%s",makeString(look_at).c_str());
-
 }
 void rotate_cam(float x_rot, float y_rot){
-    thetax+=x_rot;
-    thetay+=y_rot;
+    thetax=x_rot;
+    thetay=y_rot;
     if(thetay>=2*PI){
         thetay-=2*PI;
     }if(thetax>=PI/2){

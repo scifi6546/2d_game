@@ -8,7 +8,7 @@ const bool DEBUG=false;
 class TileMesh{
     public:
         TileMesh();
-        std::vector<Model> getModel();
+        Model getModel();
     private:
         std::vector<Model> model;
 };
@@ -65,9 +65,10 @@ class World{
         TILE_TYPES getTile(int x, int z);//gets a block at x y z 
         //sets the block at x,y,z to block
         void setTile(int x, int z, TILE_TYPES block);
-
+        void setCamPos(glm::vec3 pos);
+        void setCamPersp(float rotx, float roty);
     private:
-        glm::vec3 player_pos=glm::vec3(-0.1,1.5,-0.1);
+        glm::vec3 cam_pos=glm::vec3(16.0,2.0,16.0);
         int rootx=0;
         int rootz=0;
 
