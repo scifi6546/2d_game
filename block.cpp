@@ -1,6 +1,7 @@
 #include "block.h"
 #include "texture.h"
 #include "physics.h"
+#include "tile.h"
 #include <stdlib.h> 
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
@@ -41,15 +42,23 @@ Model TileMesh::getModel(){
     return model[0];
 }
 Chunk::Chunk(){
-    printf("empty constructor nothin happened");
-}
-Chunk::Chunk(std::vector<Tile*> tiles,glm::vec3 root_pos){
-    //printf("%f,%f,%f\n",root_pos.x,root_pos.y,root_pos.z);
-    this->root_pos=root_pos;
+    //printf("empty constructor nothin happened");
+        //printf("%f,%f,%f\n",root_pos.x,root_pos.y,root_pos.z);
+    this->root_pos=glm::vec3(0.0,0.0,0.0);
 
-    this->tiles.reserve(tiles.size());
-    for(int i=0;i<tiles.size();i++){
-        this->tiles.push_back(*tiles[i]);
+    this->tiles.reserve(chunkSize*chunkSize);
+    for(int i=0;i<chunkSize;i++){//x
+        for(int j =0; j<chunkSize;j++){//z
+            if(j%2==0){
+                this->tiles.push_back(Grass(glm::vec3(i,0,j)));
+            }
+                
+            else{
+                this->tiles.push_back(Rock(glm::vec3(i,0,j)));
+            }
+            
+        }
+        
     }
     //models = initMesh(tileMesh.getModel());
     this->setMeshes();
@@ -58,22 +67,22 @@ Chunk::Chunk(std::vector<Tile*> tiles,glm::vec3 root_pos){
 void Chunk::setMeshes(){
     this->mesh = Model(); 
     this->mesh.add(tileMesh.getModel(),glm::vec3(-10.0,0.0,-10.0),0);//needs to be done IDK why
-    for(int i =0;i<chunkSize;i++){
-        for(int j=0;j<chunkSize;j++){
-            this->mesh.add(tileMesh.getModel(),glm::vec3((float)i,0.0,(float) j),0);
-        }
-    } 
+    for(int i = 0; i<tiles.size();i++){
+        //printf("texture num: %i\n",tiles[i].textureNum);
+        this->mesh.add(tiles[i].getModel(),tiles[i].pos,tiles[i].textureNum);
+    }
     std::vector<Model> temp = {this->mesh};
     runModel = initMesh(temp);
 }
 void Chunk::draw(){
     drawMesh(runModel[0],glm::vec3(0.0,0.0,0.0));
 }
-TILE_TYPES Chunk::getTile(int x, int z){
-    return this->tiles[x*chunkSize+z].tileType;
+Tile Chunk::getTile(int x, int z){
+    return this->tiles[x*chunkSize+z];
 }
-void Chunk::setTile(int x, int z, TILE_TYPES tile){
-    this->tiles[x*chunkSize+z].setTile(tile);
+void Chunk::setTile(int x, int z, Tile tile_in){
+    //this->tiles.assign(x*chunkSize+z,tile);
+    this->tiles[x*chunkSize+z]=tile_in;
 }
 Chunk::~Chunk(){
     this->tiles.clear();
@@ -82,7 +91,7 @@ Chunk::~Chunk(){
 World::World(glm::vec3 pos_in){
     printf("hello world");
     std::vector<Tile*> tiles;
-    this->loadedChunk=Chunk(tiles,glm::vec3(0.0,0.0,0.0));
+    this->loadedChunk=Chunk();
 }
 void World::draw(){
     //printf("drawn!!\n");
@@ -96,9 +105,9 @@ glm::vec3 World::tick(glm::vec3 input_move, float delta_time){
 void World::setCamPos(glm::vec3 pos){
     this->cam_pos=pos;
 }
-TILE_TYPES World::getTile(int x, int z){
+Tile World::getTile(int x, int z){
     return this->loadedChunk.getTile(x,z);
 }
-void World::setTile(int x, int z, TILE_TYPES tile){
+void World::setTile(int x, int z, Tile tile){
     this->loadedChunk.setTile(x,z,tile);
 }

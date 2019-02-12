@@ -14,6 +14,7 @@ uniform mat4 camera;
 void main(){
     vec3 lightDir = normalize(sun_pos-Pos);
     float diff = dot(Normal,lightDir);
+    diff = abs(diff);
     vec3 diffuse_light=diff*sun_color*sun_intensity;
     
     vec3 color_light = ambient_color*ambient_intensity + diffuse_light;

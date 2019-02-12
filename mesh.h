@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include <vector>
+#include <string>
 const int numBuffers=4;
 enum Buffers{POSITION,TEXCOORD,INDEX,NORMAL};
 class Model{
