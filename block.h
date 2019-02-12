@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include "mesh.h"
+#include "tile.h"
 const bool DEBUG=false;
 class TileMesh{
     public:
@@ -12,15 +13,9 @@ class TileMesh{
     private:
         std::vector<Model> model;
 };
-enum TILE_TYPES{GRASS,ROCK};
+
 const int NUM_BLOCKS=4;
-class Tile{
-    public:
-        Tile(glm::vec3 pos,TILE_TYPES tiletype){this->pos=pos;this->tileType=tileType;}
-        void setTile(TILE_TYPES tile){this->tileType=tile;}
-        glm::vec3 pos;
-        TILE_TYPES tileType;
-};
+
 extern TileMesh tileMesh; //mesh containing all faces of block
 extern std::vector<RunTimeModel>models;
 const int chunkSize=32;
@@ -30,7 +25,7 @@ const int numVertChunks = 6;//height of vertical chunks
 class Chunk{
     public:
         Chunk();
-        Chunk(std::vector<Tile*> tiles,glm::vec3 root_pos);//heights 2 by 2 grid  x cols z rows
+        //Chunk(std::vector<Tile*> tiles,glm::vec3 root_pos);//heights 2 by 2 grid  x cols z rows
         /*
         Array Example
          XXXXXXXX
@@ -42,9 +37,9 @@ class Chunk{
         */
         void setMeshes();
         void draw();
-        TILE_TYPES getTile(int x, int z);
+        Tile getTile(int x, int z);
         //sets block in chunk
-        void setTile(int x, int z, TILE_TYPES tile);
+        void setTile(int x, int z, Tile tile_in);
         ~Chunk();
         glm::vec3 getRoot(){
             return this->root_pos;
@@ -62,9 +57,9 @@ class World{
         void draw();
         World(glm::vec3 pos_in);
         glm::vec3 tick(glm::vec3 input_move,float delta_time);//delta time measured in seconds
-        TILE_TYPES getTile(int x, int z);//gets a block at x y z 
+        Tile getTile(int x, int z);//gets a block at x y z 
         //sets the block at x,y,z to block
-        void setTile(int x, int z, TILE_TYPES block);
+        void setTile(int x, int z, Tile block);
         void setCamPos(glm::vec3 pos);
         void setCamPersp(float rotx, float roty);
     private:

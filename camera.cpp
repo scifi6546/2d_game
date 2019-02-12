@@ -12,7 +12,7 @@ glm::mat4 look_at;
 glm::vec3 cam_pos;
 float thetax;
 float thetay;
-float PI=3.14159265358979323846264338327;
+const float PI=3.14159265358979323846264338327;
 
 void INT_look();
 

@@ -1,5 +1,5 @@
 CC=g++
-LIBS=-lSDL2 -lGLEW  -lGL
+LIBS=-lSDL2 -lGLEW  -lGL -C
 CFLAGS=-I -w -ggdb
 main: main.cpp game_engine.cpp
 	$(CC) -c $(CFLAGS) main.cpp -o main.o
@@ -8,6 +8,7 @@ main: main.cpp game_engine.cpp
 	$(MAKE) loadfile
 	$(MAKE) render_manager
 	$(MAKE) physics
+	$(MAKE) Tile
 	$(CC) -c $(CFLAGS) display.cpp -o display.o
 	$(CC) -c $(CFLAGS) texture.cpp -o texture.o
 	$(CC) -c $(CFLAGS) mesh.cpp -o mesh.o
@@ -15,7 +16,7 @@ main: main.cpp game_engine.cpp
 	$(CC) -c $(CFLAGS) camera.cpp -o camera.o
 	$(CC) -c $(CFLAGS) event.cpp -o event.o
 	$(CC) -c $(CFLAGS) block.cpp -o block.o
-	$(CC) $(CFLAGS) main.o game_engine.o shader.o loadfile.o display.o mesh.o texture.o stb_image.o camera.o event.o block.o render_manager.o physics.o -o out $(LIBS)
+	$(CC) $(CFLAGS) main.o game_engine.o shader.o loadfile.o display.o mesh.o texture.o stb_image.o camera.o event.o block.o render_manager.o physics.o tile.o -o out $(LIBS)
 run:
 	$(MAKE) main
 	./out
@@ -34,6 +35,8 @@ render_manager:
 	$(CC) -c $(CFLAGS) render_manager.cpp -o render_manager.o
 physics:
 	$(CC) -c $(CFLAGS) physics.cpp -o physics.o
+Tile:
+	$(CC) -c $(CFLAGS) tile.cpp -o tile.o
 debug:
 	$(MAKE) main
 	gdb out
