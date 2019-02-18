@@ -10,6 +10,7 @@ Tile::Tile(glm::vec3 pos){
 }
 void Tile::makeModel(){
     printf("OBJ_NAME: %s\n",objName.c_str());
+    
     if(objName!=""){
        
         this->loadModel();

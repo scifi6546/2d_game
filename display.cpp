@@ -9,6 +9,12 @@ SDL_GLContext context;
 int initDisplay(int width, int height,std::string title){
     printf("displayed\n");
     SDL_Init(SDL_INIT_EVERYTHING);
+    
+
+    win = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED,
+    SDL_WINDOWPOS_CENTERED,width,height,SDL_WINDOW_OPENGL);
+    context=SDL_GL_CreateContext(win);
+
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,8);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
@@ -16,10 +22,7 @@ int initDisplay(int width, int height,std::string title){
     SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,32);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
 
-    win = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED,
-    SDL_WINDOWPOS_CENTERED,width,height,SDL_WINDOW_OPENGL);
-    context=SDL_GL_CreateContext(win);
-    const char* error;
+    //const char* error;
     //error = SDL_GetError();
     /*
     if(error!=NULL)
@@ -51,10 +54,3 @@ void clearDisplay(float r, float g, float b, float a){
     glClearColor(r,g,b,1.0f);
     glClear(GL_COLOR_BUFFER_BIT); 
 }
-/*
-SDL_Event getEvent(){
-    SDL_Event out;
-    SDL_PollEvent(&out);
-    return out;
-}
-*/

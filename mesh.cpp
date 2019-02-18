@@ -9,7 +9,7 @@
 #include "texture.h"
 #include "error.h"
 
-void Model::add(Model to_add,glm::vec3 pos,int textureNum){
+void Model::add(Model to_add,glm::vec3 posV,int textureNum){
     int numTextures = getNumTextures();
     this->pos.reserve(this->pos.size()+to_add.pos.size());
     this->texCoord.reserve(this->texCoord.size()+to_add.texCoord.size());
@@ -17,7 +17,7 @@ void Model::add(Model to_add,glm::vec3 pos,int textureNum){
         
     }
     for(int i =0;i<to_add.pos.size();i++){
-        this->pos.push_back(to_add.pos[i]+pos);
+        this->pos.push_back(to_add.pos[i]+posV);
         
         glm::vec2 temp = to_add.texCoord[i];
         temp.y+=(float) textureNum;
@@ -33,25 +33,16 @@ void Model::add(Model to_add,glm::vec3 pos,int textureNum){
     }
 
 }
-std::vector<unsigned int> numIndicies;
-std::vector<RunTimeModel> initMesh(std::vector<Model> models){
 
+std::vector<RunTimeModel> initMesh(std::vector<Model> models){
     std::vector<RunTimeModel> runmodels;
     runmodels.reserve(models.size());
-    
-    numIndicies.reserve(models.size());
-    std::vector<GLuint> modelnum;
-    modelnum.reserve(models.size());
 
-    unsigned int numindicies;
+    //unsigned int numindicies;
     for(int i =0;i<models.size();i++){
-        numindicies = models[i].indices.size();
-
-        numIndicies.push_back(models[i].indices.size());
-        unsigned int numindicies = models[i].indices.size();
         GLuint vertex_array_object;//becomes meshNum in runtime model
         glGenVertexArrays(1,&vertex_array_object);
-        //modelnum.push_back(vertex_array_object);
+
         glBindVertexArray(vertex_array_object);
         glError=glGetError();
 
@@ -97,9 +88,7 @@ std::vector<RunTimeModel> initMesh(std::vector<Model> models){
         if(glError!=0){
             printf("error: %i\n\n\n",glError);
         }
-        runmodels.push_back(RunTimeModel(vertex_array_object,i,numindicies,vertex_array_buffer));
-
-        
+        runmodels.push_back(RunTimeModel(vertex_array_object,i,models[i].indices.size(),vertex_array_buffer));
     }
     glError=glGetError();
     return runmodels;

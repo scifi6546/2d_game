@@ -18,7 +18,7 @@
 #include <unistd.h>
 #include <vector>
 #include <glm/gtc/matrix_transform.hpp>
-glm::vec3 temp_trans;
+//glm::vec3 temp_trans;
 float walk_speed = 1.0f;
 SDL_Thread* input;
 float mouse_move_speed = 0.005f;
@@ -31,13 +31,13 @@ World *GameWorld;
 int lastTime = 0;
 int init(){
     float dist = 10.0f;
-    player_pos=glm::vec3(16.0f,400.0f,16.0f);
+    player_pos=glm::vec3(0.0f,0.0f,0.0f);
     initDisplay(display_width,display_height,"temp_title");
 
     
 
     shaderInit();
-    initCam(60.0,display_width,display_height,.01,500);
+    initCam(90.0,display_width,display_height,.01,500);
 
     std::vector<std::string> textures;
     textures.push_back("./textures/grass.png");
@@ -45,7 +45,6 @@ int init(){
     //textures.push_back("./textures/water.png");
     genTexture(textures);
     clearDisplay(0.0,.1,.6,1.0);
-    temp_trans = glm::vec3(0.0f,0.0f,0.0f);
     //temp_mesh.push_back(Mesh_OBJ(0,glm::vec3(1.0f,0.0f,0.0f)));
     //Chunk temp_chunk = Chunk(glm::vec3(-10,-10,-10));
     GameWorld = new World(player_pos);
@@ -66,13 +65,15 @@ int init(){
         int current_time = SDL_GetTicks();
         float deltaT = current_time - lastTime;
         deltaT/=1000.0f;
+        /*
         if(current_time%40==0){
             printf("frame rate: %f FPS\n",1.0f/deltaT);
-        }
+        */
         lastTime=current_time;
 
-        player_pos = GameWorld->tick(temp_move,deltaT);
+        player_pos = GameWorld->tick(player_pos,deltaT);
         rManager::drawFrame();
+        //printf("glError: %i\n",glError);
     }
     delDisplay();
     return 0;

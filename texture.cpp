@@ -20,32 +20,41 @@ void genTexture(std::vector<std::string> filename)
     int width=0;
     int height=0;
     int numcomponents=0;
-    // /printf("texture_new: %i \n",temp_texture);
-    for (int i = 0; i < num_textures; i++)
-    {
-        glGenTextures(1, &texture);
-        printf("texture[%i] = %i\n", i, texture);
-    }
+    glGenTextures(1, &texture);
     unsigned char *imagedata;
     int imagedata_len = 0;
+    unsigned char *temp_imagedata;
     for (int i = 0; i < num_textures; i++)
     {
+        printf("working on texture: %i\n",i);
         int tempHeight;
-        unsigned char *temp_imagedata = stbi_load(filename[i].c_str(), &width,
+        temp_imagedata = stbi_load(filename[i].c_str(), &width,
                                              &tempHeight, &numcomponents, reqcomponents);
         if (temp_imagedata == NULL)
         {
             printf("can not find texture %s\n", filename[i].c_str());
         }
-        int tempLen = 4*tempHeight*width;
+        
         printf("temp height: %i widthL %i\n",tempHeight,width);
         if(numcomponents<reqcomponents){
             numcomponents=reqcomponents;
         }
-        imagedata=(unsigned char*) realloc(imagedata,sizeof(char)*(imagedata_len+tempLen));
+        int tempLen = numcomponents*tempHeight*width;
+        //printf("image_data address: %p\n",(void*)imagedata);
+        
+        if(i==0){
+           imagedata = (unsigned char*) calloc(tempLen,sizeof(unsigned char));
+        }else{
+            imagedata=(unsigned char*) realloc(imagedata,sizeof(char)*(imagedata_len+tempLen));
+        }
+       
+        printf("image_data allocated: %p\n",(void*)imagedata);
+        memcpy(imagedata+imagedata_len,temp_imagedata,tempLen);
+        /*
         for(int i =0; i<tempLen;i++){
             imagedata[imagedata_len+i]=temp_imagedata[i];
         }
+        */
         imagedata_len+=tempLen;
         height+=tempHeight;
         free(temp_imagedata);

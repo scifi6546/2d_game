@@ -18,7 +18,7 @@ const int NUM_BLOCKS=4;
 
 extern TileMesh tileMesh; //mesh containing all faces of block
 extern std::vector<RunTimeModel>models;
-const int chunkSize=32;
+const int chunkSize=8;
 const int renderChunkSize = chunkSize;//renderChunkSize has to equal chunk size I do not know why
 const int CHUNK_RENDER_DIST=5;
 const int numVertChunks = 6;//height of vertical chunks
