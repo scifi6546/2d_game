@@ -53,7 +53,7 @@ class Chunk{
 };
 class World{
     public:
-        Chunk loadedChunk;//outer vector is layers of inner layer
+        Chunk loadedChunk= Chunk();//outer vector is layers of inner layer
         void draw();
         World(glm::vec3 pos_in);
         glm::vec3 tick(glm::vec3 input_move,float delta_time);//delta time measured in seconds

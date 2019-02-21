@@ -91,7 +91,7 @@ Chunk::~Chunk(){
 World::World(glm::vec3 pos_in){
     printf("hello world");
     std::vector<Tile*> tiles;
-    this->loadedChunk=Chunk();
+    //this->loadedChunk=Chunk();
 }
 void World::draw(){
     //printf("drawn!!\n");

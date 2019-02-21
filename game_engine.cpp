@@ -31,7 +31,7 @@ World *GameWorld;
 int lastTime = 0;
 int init(){
     float dist = 10.0f;
-    player_pos=glm::vec3(0.0f,0.0f,0.0f);
+    player_pos=glm::vec3(8.0f,2.0f,2.0f);
     initDisplay(display_width,display_height,"temp_title");
 
     
@@ -58,6 +58,7 @@ int init(){
     float x=M_PI/2;
     float y = 0.0;
     while(!isclosed()){
+        //player_pos.y+=.01;
         //y+=0.01;
         //printf("x: %f y: %f\n",x,y);
         rotate_cam(x,y);
@@ -71,7 +72,7 @@ int init(){
         */
         lastTime=current_time;
 
-        player_pos = GameWorld->tick(player_pos,deltaT);
+        GameWorld->tick(player_pos,deltaT);
         rManager::drawFrame();
         //printf("glError: %i\n",glError);
     }
