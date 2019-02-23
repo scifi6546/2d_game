@@ -66,7 +66,6 @@ Chunk::Chunk(){
 
 void Chunk::setMeshes(){
     this->mesh = Model(); 
-    this->mesh.add(tileMesh.getModel(),glm::vec3(-10.0,0.0,-10.0),0);//needs to be done IDK why
     for(int i = 0; i<tiles.size();i++){
         //printf("texture num: %i\n",tiles[i].textureNum);
         this->mesh.add(tiles[i].getModel(),tiles[i].pos,tiles[i].textureNum);

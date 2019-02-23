@@ -16,6 +16,7 @@ void Model::add(Model to_add,glm::vec3 posV,int textureNum){
     if(this->pos.size()==0){
         
     }
+    int size = this->pos.size();
     for(int i =0;i<to_add.pos.size();i++){
         this->pos.push_back(to_add.pos[i]+posV);
         
@@ -24,7 +25,7 @@ void Model::add(Model to_add,glm::vec3 posV,int textureNum){
         temp.y/=(float) numTextures;
         this->texCoord.push_back(temp);
     }
-    int size = this->pos.size();
+    
     for(int i =0;i<to_add.indices.size();i++){
         this->indices.push_back(to_add.indices[i]+size);
     }
