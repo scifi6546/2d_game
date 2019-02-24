@@ -48,9 +48,9 @@ void Tile::genSquare(){
     meshModel = Model(pos_model,texcoord,indicies,normal);
 }
 void Tile::loadModel(){
-    printf("rock loaded\n");
+    //printf("rock loaded\n");
     objl::Loader Loader;
-    printf("objName: %s\n",objName.c_str());
+    //printf("objName: %s\n",objName.c_str());
     bool loaded = Loader.LoadFile(objName);
     if(!loaded){
         printf("MODEL NOT LOADED!!!!\n\n\n\n");
@@ -90,7 +90,7 @@ Grass::Grass(glm::vec3 pos_in){
     this->textureNum=0;
 }
 Rock::Rock(glm::vec3 pos_in){
-    objName="./Models/Rock2.obj";
+    objName="./Models/Rock.obj";
     this->pos=pos_in;
     this->makeModel();
     this->textureNum=1;

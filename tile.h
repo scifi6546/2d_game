@@ -5,7 +5,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include <string>
-
+enum TileTypes{GRASS,ROCK};
 class Tile{
     public:
         Tile();

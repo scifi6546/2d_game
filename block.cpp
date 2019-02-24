@@ -2,6 +2,7 @@
 #include "texture.h"
 #include "physics.h"
 #include "tile.h"
+#include "loadfile.h"
 #include <stdlib.h> 
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
@@ -45,14 +46,14 @@ Chunk::Chunk(){
     //printf("empty constructor nothin happened");
         //printf("%f,%f,%f\n",root_pos.x,root_pos.y,root_pos.z);
     this->root_pos=glm::vec3(0.0,0.0,0.0);
-
+    this->loadTiles();
     this->tiles.reserve(chunkSize*chunkSize);
+    /*
     for(int i=0;i<chunkSize;i++){//x
         for(int j =0; j<chunkSize;j++){//z
             if(j%2==0){
                 this->tiles.push_back(Grass(glm::vec3(i,0,j)));
             }
-                
             else{
                 this->tiles.push_back(Rock(glm::vec3(i,0,j)));
             }
@@ -60,10 +61,60 @@ Chunk::Chunk(){
         }
         
     }
+    */
     //models = initMesh(tileMesh.getModel());
     this->setMeshes();
 }
+void Chunk::loadTiles(){
+    std::string map = loadFile("./maps/default.map");
+    char lastChar = map[0];//stores last important charecter
+    std::string currentNum;
+    int temp_number;
 
+    std::vector<int> tileType;
+    std::vector<glm::vec3> tile_pos;
+    int x=0,z=0;
+    for(int i =0; i<map.length();i++){
+        if(map[i]==','||map[i]==')'){
+            temp_number=std::stoi(currentNum);
+            //printf("number: %i\n",temp_number);
+        }
+        if(map[i]=='('||map[i]==','||map[i]==')'||map[i]=='\n'||map[i]==' '){
+            if(map[i]==','){
+                tileType.push_back(temp_number);
+            }
+            if(map[i]==')'){
+                int tileHeight=temp_number;
+                tile_pos.push_back(glm::vec3(x,0,z));
+                z--;
+            }
+            if(map[i]=='\n'){
+                
+                x++;
+                z=0;
+            }
+            lastChar=map[i];
+            currentNum="";
+
+        }else{
+            currentNum+=map[i];
+        }
+    }
+    printf("tiles.size: %i\n",tileType.size());
+    printf("vector.size: %i\n",tile_pos.size());
+
+    for(int i =0;i<tileType.size();i++){
+        printf("tiles[%i]: %i\n",i,tileType[i]);
+        glm::vec3 pos = tile_pos[i];
+        printf("pos[i]: %f,%f,%f\n",i,pos.x,pos.y,pos.z);
+        if(tileType[i]==0){
+            this->tiles.push_back(Grass(pos));
+        }
+        if(tileType[i]==1){
+            this->tiles.push_back(Rock(pos));
+        }
+    }
+}
 void Chunk::setMeshes(){
     this->mesh = Model(); 
     for(int i = 0; i<tiles.size();i++){
