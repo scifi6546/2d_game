@@ -43,8 +43,6 @@ Model TileMesh::getModel(){
     return model[0];
 }
 Chunk::Chunk(){
-    //printf("empty constructor nothin happened");
-        //printf("%f,%f,%f\n",root_pos.x,root_pos.y,root_pos.z);
     this->root_pos=glm::vec3(0.0,0.0,0.0);
     this->makeMap(this->loadTiles("./maps/default.map"));
     this->tiles.reserve(chunkSize*chunkSize);
@@ -57,9 +55,6 @@ tileMap Chunk::loadTiles(std::string file){
     std::string currentNum;
     int temp_number;
     int num_pos=0;
-    //std::vector<int> tileType;
-    //std::vector<glm::vec3> tile_pos;
-    //std::vector<int> bottom;
     int x=0,z=0;
     int tempTile=0;
     int temp_bottom=0;
@@ -78,7 +73,6 @@ tileMap Chunk::loadTiles(std::string file){
                 temp_top=temp_number;
             }   
             num_pos++;
-            //printf("number: %i\n",temp_number);
         }
         if(map[i]=='('||map[i]==','||map[i]==')'||map[i]=='\n'||map[i]==' '){
                 
@@ -117,7 +111,6 @@ void Chunk::makeMap(tileMap in){
 void Chunk::setMeshes(){
     this->mesh = Model(); 
     for(int i = 0; i<tiles.size();i++){
-        //printf("texture num: %i\n",tiles[i].textureNum);
         printf("texture_num: %i\n",tiles[i].textureNum);
         this->mesh.add(tiles[i].getModel(),tiles[i].pos,tiles[i].textureNum);
     }
@@ -131,7 +124,6 @@ Tile Chunk::getTile(int x, int z){
     return this->tiles[x*chunkSize+z];
 }
 void Chunk::setTile(int x, int z, Tile tile_in){
-    //this->tiles.assign(x*chunkSize+z,tile);
     this->tiles[x*chunkSize+z]=tile_in;
 }
 Chunk::~Chunk(){
@@ -141,7 +133,6 @@ Chunk::~Chunk(){
 World::World(glm::vec3 pos_in){
     printf("hello world");
     std::vector<Tile*> tiles;
-    //this->loadedChunk=Chunk();
 }
 void World::draw(){
     //printf("drawn!!\n");
@@ -149,7 +140,6 @@ void World::draw(){
     this->loadedChunk.draw();    
 }
 glm::vec3 World::tick(glm::vec3 input_move, float delta_time){
-    //player_pos = physics::runFrame(player_pos,input_move,this,delta_time); 
     return cam_pos;
 }
 void World::setCamPos(glm::vec3 pos){
