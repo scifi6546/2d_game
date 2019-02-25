@@ -4,10 +4,11 @@
 Tile::Tile(){
     //this->makeModel();
 }
-void Tile::makeModel(int bottom,int height){
+void Tile::makeModel(int bottom,int height,int number){
     printf("OBJ_NAME: %s\n",objName.c_str());
     if(useMultiModels){
-        this->meshModel=this->loadMultiModel(bottom,height);
+        //to implement properly
+        this->meshModel=this->loadMultiModel(bottom,height+bottom,number);
         return;
     }
     if(objName!=""){
@@ -46,12 +47,21 @@ void Tile::genSquare(){
     indicies={0,1,2,0,3,2};
     meshModel = Model(pos_model,texcoord,indicies,normal);
 }
-Model Tile::loadMultiModel(int bottom, int height){
+Model Tile::loadMultiModel(int bottom,int top, int number){//to finish
     printf("used multi models!\n");
     Model temp;
-    temp.add(loadModel(multiBasePath+"bottom.obj"),glm::vec3(0.0,1.0,0.0),textureNum);
-    temp.add(loadModel(multiBasePath+"middle.obj"),glm::vec3(0.0,1.0,0.0),textureNum);
-    temp.add(loadModel(multiBasePath+"top.obj"   ),glm::vec3(0.0,1.0,0.0),textureNum);
+    char tempStr[4];
+    sprintf(tempStr,"%0.4i",number);
+    std::string numStr = tempStr;
+    for(int i =bottom;i<top;i++){
+        if(i==bottom){
+            temp.add(loadModel(multiBasePath+numStr+"_bot.obj"),glm::vec3(0.0,0.0,0.0),textureNum);
+        }else if(i==top){
+            temp.add(loadModel(multiBasePath+numStr+"_top.obj"),glm::vec3(0.0,0.0,0.0),textureNum);
+        }else{
+            temp.add(loadModel(multiBasePath+numStr+"_mid.obj"),glm::vec3(0.0,0.0,0.0),textureNum);
+        }
+    }
     return temp;
 }
 Model Tile::loadModel(std::string in){
@@ -91,16 +101,16 @@ Model Tile::loadModel(std::string in){
     
     return Model(pos,texCoord,indices,normal);
 }
-Grass::Grass(glm::vec3 pos_in,int height){
+Grass::Grass(glm::vec3 pos_in,int height,int number){
     this->pos=pos_in;
-    this->makeModel(round(pos_in.y),height);
+    this->makeModel(round(pos_in.y),height,number);
     this->textureNum=0;
 }
-Rock::Rock(glm::vec3 pos_in,int height){
+Rock::Rock(glm::vec3 pos_in,int height,int number){
     //objName="./Models/Rock.obj";
     objName="./Models/rock/bottom.obj";
     this->pos=pos_in;
     this->useMultiModels=true;
-    this->makeModel(round(pos_in.y),height);
+    this->makeModel(round(pos_in.y),height,number);
     this->textureNum=1;
 }

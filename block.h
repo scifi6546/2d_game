@@ -36,6 +36,7 @@ class Chunk{
 
         */
         void setMeshes();
+        std::vector<int> genHeights(tileMap in);//generates array of height vectors
         void draw();
         Tile getTile(int x, int z);
         //sets block in chunk
@@ -46,7 +47,7 @@ class Chunk{
         }
     private:
         tileMap loadTiles(std::string file);//loads Tiles from file ./maps/default.map
-        void makeMap(tileMap in);//generates map based on input tile map
+        void makeMap(tileMap in,std::vector<int> number);//generates map based on input tile map and number array containing similar blocks (see map.md)
         std::vector<Tile> tiles;
         glm::vec3 root_pos;
         int isBlock = 0;//checks if there is any air in block if there is then int >=1

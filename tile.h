@@ -6,26 +6,29 @@
 #include <glm/glm.hpp>
 #include <string>
 enum TileTypes{GRASS,ROCK};
+enum LAYER_TYPE{BOT,MID,TOP};
 struct tileMap{
     std::vector<TileTypes> tileMap;//tile types same length as tilePos
     std::vector<glm::vec3> tilePos;//position of tiles
     std::vector<int> heights;//heights of tiles altitude of top tile calculated with: tilePos[i].y+heights
+    int width;//width in z
+    int height;//width i
 };
 class Tile{
     public:
         Tile();
         //Tile(glm::vec3 pos_in);
-        Tile(glm::vec3 pos_in,int height);
+        Tile(glm::vec3 pos_in,int number);
         std::string getTexturePath(){return texturePath;};
         Model getModel(){return meshModel;};
         glm::vec3 pos=glm::vec3(0.0,0.0,0.0);
 
         int textureNum = 0;
-        void makeModel(int bottom,int top);
+        void makeModel(int bottom,int top,int number);
         std::string objName="";
         bool useMultiModels=false;//checks if using multiple models
     private:
-        Model loadMultiModel(int bottom, int top);
+        Model loadMultiModel(int bottom,int top, int number);
         Model loadModel(std::string in);
         //generates square mesh
         void genSquare();
@@ -40,14 +43,14 @@ class Tile{
 class Grass:public Tile{
     public:
         //Grass(glm::vec3 pos_in);
-        Grass(glm::vec3 pos_in,int height);
+        Grass(glm::vec3 pos_in,int height,int number);
     private:
         std::string texturePath="./textures/grass.png";
 };
 class Rock:public Tile{
     public:
         //Rock(glm::vec3 pos_in);
-        Rock(glm::vec3 pos_in,int height);
+        Rock(glm::vec3 pos_in,int height,int number);
         //std::string objName="./Models/Rock.obj";
         //textureNum = 1;
     private:
