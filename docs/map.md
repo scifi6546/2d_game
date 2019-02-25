@@ -12,7 +12,7 @@ The blocks are determined using the neighboring block heights.
 If a neighboring tile has the same height type (top, mid or bot) 
 then the numeral will be a 1 instead of a 0. The numeral is determed 
 using the following chart: 
-`
+```
 |------|------|------|
 |      |      |      |
 | N/A  | 10^0 |      |
@@ -23,4 +23,4 @@ using the following chart:
 |      |      |      |
 | N/A  | 10^3 | N/A  |
 |------|------|------|
-`
+```
