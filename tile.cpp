@@ -2,18 +2,17 @@
 #include "OBJ_Loader.h"
 #include <string>
 Tile::Tile(){
-    this->makeModel();
+    //this->makeModel();
 }
-Tile::Tile(glm::vec3 pos){
-    this->pos=pos;
-    this->makeModel();   
-}
-void Tile::makeModel(){
+void Tile::makeModel(int bottom,int height){
     printf("OBJ_NAME: %s\n",objName.c_str());
-    
+    if(useMultiModels){
+        this->meshModel=this->loadMultiModel(bottom,height);
+        return;
+    }
     if(objName!=""){
        
-        this->loadModel();
+        this->meshModel=this->loadModel(objName);
         return;
     }else{
         this->genSquare();
@@ -47,14 +46,22 @@ void Tile::genSquare(){
     indicies={0,1,2,0,3,2};
     meshModel = Model(pos_model,texcoord,indicies,normal);
 }
-void Tile::loadModel(){
+Model Tile::loadMultiModel(int bottom, int height){
+    printf("used multi models!\n");
+    Model temp;
+    temp.add(loadModel(multiBasePath+"bottom.obj"),glm::vec3(0.0,1.0,0.0),textureNum);
+    temp.add(loadModel(multiBasePath+"middle.obj"),glm::vec3(0.0,1.0,0.0),textureNum);
+    temp.add(loadModel(multiBasePath+"top.obj"   ),glm::vec3(0.0,1.0,0.0),textureNum);
+    return temp;
+}
+Model Tile::loadModel(std::string in){
     //printf("rock loaded\n");
     objl::Loader Loader;
     //printf("objName: %s\n",objName.c_str());
-    bool loaded = Loader.LoadFile(objName);
+    bool loaded = Loader.LoadFile(in);
     if(!loaded){
         printf("MODEL NOT LOADED!!!!\n\n\n\n");
-        return;
+        return Model();
     }
     std::vector<glm::vec3> pos;
     std::vector<glm::vec3> normal;
@@ -82,16 +89,18 @@ void Tile::loadModel(){
     }
     //printf("normal len: %i, pos")
     
-    meshModel=Model(pos,texCoord,indices,normal);
+    return Model(pos,texCoord,indices,normal);
 }
-Grass::Grass(glm::vec3 pos_in){
+Grass::Grass(glm::vec3 pos_in,int height){
     this->pos=pos_in;
-    this->makeModel();
+    this->makeModel(round(pos_in.y),height);
     this->textureNum=0;
 }
-Rock::Rock(glm::vec3 pos_in){
-    objName="./Models/Rock.obj";
+Rock::Rock(glm::vec3 pos_in,int height){
+    //objName="./Models/Rock.obj";
+    objName="./Models/rock/bottom.obj";
     this->pos=pos_in;
-    this->makeModel();
+    this->useMultiModels=true;
+    this->makeModel(round(pos_in.y),height);
     this->textureNum=1;
 }

@@ -45,7 +45,8 @@ class Chunk{
             return this->root_pos;
         }
     private:
-        void loadTiles();//loads Tiles from file ./maps/default.map
+        tileMap loadTiles(std::string file);//loads Tiles from file ./maps/default.map
+        void makeMap(tileMap in);//generates map based on input tile map
         std::vector<Tile> tiles;
         glm::vec3 root_pos;
         int isBlock = 0;//checks if there is any air in block if there is then int >=1
