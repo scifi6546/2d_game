@@ -27,8 +27,8 @@ numeral is determed using the following chart:
 ```
 
 blocks to do:
-|Block               |Not Started|Done|
-|--------------------|-----------|----|
+|Block                |Not Started|Done|
+| ------------------- | --------- | -- |
 |(Rock)  0000_bot.obj | X         |    |
 |(Rock)  0001_bot.obj | X         |    |
 |(Rock)  0010_bot.obj | X         |    |
