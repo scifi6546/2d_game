@@ -29,7 +29,7 @@ numeral is determed using the following chart:
 blocks to do:
 |Block                |Not Started|Done|
 | ------------------- | --------- | -- |
-|(Rock)  0000_bot.obj | X         |    |
+|(Rock)  0000_bot.obj |           | X  |
 |(Rock)  0001_bot.obj | X         |    |
 |(Rock)  0010_bot.obj | X         |    |
 |(Rock)  0011_bot.obj | X         |    |
@@ -45,7 +45,7 @@ blocks to do:
 |(Rock)  1101_bot.obj | X         |    |
 |(Rock)  1110_bot.obj | X         |    |
 |(Rock)  1111_bot.obj | X         |    |
-|(Rock)  0000_mid.obj | X         |    |
+|(Rock)  0000_mid.obj |           | X  |
 |(Rock)  0001_mid.obj | X         |    |
 |(Rock)  0010_mid.obj | X         |    |
 |(Rock)  0011_mid.obj | X         |    |

@@ -55,11 +55,12 @@ Model Tile::loadMultiModel(int bottom,int top, int number){//to finish
     std::string numStr = tempStr;
     for(int i =bottom;i<top;i++){
         if(i==bottom){
-            temp.add(loadModel(multiBasePath+numStr+"_bot.obj"),glm::vec3(0.0,0.0,0.0),textureNum);
+            temp.add(loadModel(multiBasePath+numStr+"_bot.obj"),glm::vec3(0.0,i,0.0),textureNum);
         }else if(i==top){
-            temp.add(loadModel(multiBasePath+numStr+"_top.obj"),glm::vec3(0.0,0.0,0.0),textureNum);
+            temp.add(loadModel(multiBasePath+numStr+"_top.obj"),glm::vec3(0.0,i,0.0),textureNum);
         }else{
-            temp.add(loadModel(multiBasePath+numStr+"_mid.obj"),glm::vec3(0.0,0.0,0.0),textureNum);
+            
+            temp.add(loadModel(multiBasePath+numStr+"_mid.obj"),glm::vec3(0.0,i,0.0),textureNum);
         }
     }
     return temp;
@@ -67,7 +68,7 @@ Model Tile::loadMultiModel(int bottom,int top, int number){//to finish
 Model Tile::loadModel(std::string in){
     //printf("rock loaded\n");
     objl::Loader Loader;
-    //printf("objName: %s\n",objName.c_str());
+    printf("objName: %s\n",in.c_str());
     bool loaded = Loader.LoadFile(in);
     if(!loaded){
         printf("MODEL NOT LOADED!!!!\n\n\n\n");

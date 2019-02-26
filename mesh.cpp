@@ -10,9 +10,9 @@
 #include "error.h"
 
 void Model::add(Model to_add,glm::vec3 posV,int textureNum){
-    printf("mesh texturenum: %i\n",textureNum);
+    //printf("mesh texturenum: %i\n",textureNum);
     int numTextures = getNumTextures();
-    printf("num textures:%i\n",numTextures);
+    //printf("num textures:%i\n",numTextures);
     this->pos.reserve(this->pos.size()+to_add.pos.size());
     this->texCoord.reserve(this->texCoord.size()+to_add.texCoord.size());
     if(this->pos.size()==0){
@@ -36,7 +36,6 @@ void Model::add(Model to_add,glm::vec3 posV,int textureNum){
     }
 
 }
-
 std::vector<RunTimeModel> initMesh(std::vector<Model> models){
     std::vector<RunTimeModel> runmodels;
     runmodels.reserve(models.size());
