@@ -22,5 +22,8 @@ void main(){
     //color=vec4(Pos,1.0);
     //color=texture(diffuse,texcoord0);
     color=texture(diffuse,texcoord0)*vec4(color_light,1.0);
+    if(color.a < 0.1){
+        discard;
+    }
    // color=texture(diffuse,texcoord0);
 }
