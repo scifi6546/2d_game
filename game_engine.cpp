@@ -42,6 +42,7 @@ int init(){
     std::vector<std::string> textures;
     textures.push_back("./textures/grass.png");
     textures.push_back("./textures/rock.png");
+    textures.push_back("./textures/player.png");
     //textures.push_back("./textures/water.png");
     genTexture(textures);
     clearDisplay(0.0,.1,.6,1.0);
@@ -72,7 +73,7 @@ int init(){
         */
         lastTime=current_time;
 
-        GameWorld->tick(player_pos,deltaT);
+        GameWorld->tick(temp_move,deltaT);
         rManager::drawFrame();
         //printf("glError: %i\n",glError);
     }

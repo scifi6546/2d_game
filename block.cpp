@@ -193,15 +193,20 @@ Chunk::~Chunk(){
     std::cout<<"chunk deleted\n";
 }
 World::World(glm::vec3 pos_in){
+    player = Entity(glm::vec3(0.0,0.0,0.0));
     printf("hello world");
     std::vector<Tile*> tiles;
 }
 void World::draw(){
     //printf("drawn!!\n");
+    player.draw();
     bindTexture(0);
     this->loadedChunk.draw();    
 }
 glm::vec3 World::tick(glm::vec3 input_move, float delta_time){
+    float temp_deltaT = -1*delta_time;
+    player.pos.x+=input_move.z*temp_deltaT;
+    player.pos.z+=input_move.x*temp_deltaT;
     return cam_pos;
 }
 void World::setCamPos(glm::vec3 pos){

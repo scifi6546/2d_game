@@ -3,6 +3,7 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <vector>
+#include "entity.h"
 #include "mesh.h"
 #include "tile.h"
 const bool DEBUG=false;
@@ -65,6 +66,7 @@ class World{
         void setTile(int x, int z, Tile block);
         void setCamPos(glm::vec3 pos);
         void setCamPersp(float rotx, float roty);
+        Entity player;
     private:
         glm::vec3 cam_pos=glm::vec3(16.0,2.0,16.0);
         int rootx=0;
