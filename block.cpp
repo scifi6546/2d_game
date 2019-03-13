@@ -183,7 +183,13 @@ void Chunk::draw(){
     drawMesh(runModel[0],glm::vec3(0.0,0.0,0.0));
 }
 Tile Chunk::getTile(int x, int z){
-    return this->tiles[x*chunkSize+z];
+    int index = x*chunkSize+z;
+    if(index<0||index>=this->tiles.size()){
+        //todo implelemt better error handeling
+        printf("wrong tile accessed need to fix\n");
+        return this->tiles[0];
+    }
+    return this->tiles[index];
 }
 void Chunk::setTile(int x, int z, Tile tile_in){
     this->tiles[x*chunkSize+z]=tile_in;
@@ -193,7 +199,7 @@ Chunk::~Chunk(){
     std::cout<<"chunk deleted\n";
 }
 World::World(glm::vec3 pos_in){
-    player = Entity(glm::vec3(0.0,0.0,0.0));
+    player = Entity(glm::vec3(1.0,0.0,0.0));
     printf("hello world");
     std::vector<Tile*> tiles;
 }
@@ -205,8 +211,13 @@ void World::draw(){
 }
 glm::vec3 World::tick(glm::vec3 input_move, float delta_time){
     float temp_deltaT = -1*delta_time;
-    player.pos.x+=input_move.z*temp_deltaT;
-    player.pos.z+=input_move.x*temp_deltaT;
+    glm::vec3 temp_player_pos = player.pos;
+
+    glm::vec3 player_v = glm::vec3(0.0,0.0,0.0);
+    player_v.x=input_move.z*(-1);
+    player_v.z=input_move.x*(-1);
+
+    player.pos=physics::runFrame(player.pos,player_v,this,delta_time);
     return cam_pos;
 }
 void World::setCamPos(glm::vec3 pos){
