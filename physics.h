@@ -1,5 +1,5 @@
 #include <glm/glm.hpp>
-#include "block.h"
+#include "block.hpp"
 #ifndef PHYSICS_H
 #define PHYSICS_H
 namespace physics{

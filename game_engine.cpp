@@ -1,5 +1,5 @@
-#include "game_engine.h"
-#include <SDL2/SDL.h>
+#include "game_engine.hpp"
+#include <SDL.h>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <string>
@@ -9,13 +9,12 @@
 #include "texture.h"
 #include "camera.h"
 #include "event.h"
-#include "block.h"
+#include "block.hpp"
 #include "error.h"
 #include "game_const.h"
 #include "physics.h"
         
 #include "render_manager.h"
-#include <unistd.h>
 #include <vector>
 #include <glm/gtc/matrix_transform.hpp>
 //glm::vec3 temp_trans;

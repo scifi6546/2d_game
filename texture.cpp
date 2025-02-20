@@ -21,7 +21,7 @@ void genTexture(std::vector<std::string> filename)
     int height=0;
     int numcomponents=0;
     glGenTextures(1, &texture);
-    unsigned char *imagedata;
+    unsigned char *imagedata = nullptr;
     int imagedata_len = 0;
     unsigned char *temp_imagedata;
     for (int i = 0; i < num_textures; i++)

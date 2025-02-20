@@ -7,12 +7,14 @@
 #include <string>
 enum TileTypes{GRASS,ROCK};
 enum LAYER_TYPE{BOT,MID,TOP};
-struct tileMap{
-    std::vector<TileTypes> tileMap;//tile types same length as tilePos
+class TileMap{
+public: 
+    std::vector<TileTypes> map ;//tile types same length as tilePos
     std::vector<glm::vec3> tilePos;//position of tiles
     std::vector<int> heights;//heights of tiles altitude of top tile calculated with: tilePos[i].y+heights
-    int width;//width in z
-    int height;//width i
+    int width=1;//width in z
+    int height=1;//width i
+    TileMap();
 };
 class Tile{
     public:

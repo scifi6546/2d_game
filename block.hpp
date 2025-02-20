@@ -5,8 +5,10 @@
 #include <vector>
 #include "entity.h"
 #include "mesh.h"
-#include "tile.h"
+#include "tile.hpp"
 const bool DEBUG=false;
+
+
 class TileMesh{
     public:
         TileMesh();
@@ -37,7 +39,7 @@ class Chunk{
 
         */
         void setMeshes();
-        std::vector<int> genHeights(tileMap in);//generates array of height vectors
+        std::vector<int> genHeights(TileMap in);//generates array of height vectors
         void draw();
         Tile getTile(int x, int z);
         //sets block in chunk
@@ -47,8 +49,8 @@ class Chunk{
             return this->root_pos;
         }
     private:
-        tileMap loadTiles(std::string file);//loads Tiles from file ./maps/default.map
-        void makeMap(tileMap in,std::vector<int> number);//generates map based on input tile map and number array containing similar blocks (see map.md)
+        TileMap loadTiles(std::string file);//loads Tiles from file ./maps/default.map
+        void makeMap(TileMap in,std::vector<int> number);//generates map based on input tile map and number array containing similar blocks (see map.md)
         std::vector<Tile> tiles;
         glm::vec3 root_pos;
         int isBlock = 0;//checks if there is any air in block if there is then int >=1

@@ -1,7 +1,21 @@
 #include "world_gen.h"
+#include "block.hpp"
+enum BLOCK_TYPES { B_AIR, B_GRASS, B_ROCK, B_WATER, B_SNOW };
+class Block {
+public:
+    Block(glm::vec3 pos, BLOCK_TYPES blocktype);
+    glm::vec3 pos;
+    BLOCK_TYPES blockType;
+};
+/*
+
 void world_gen::init_gen(){
 
 }
+*/
+/*
+
+
 std::vector<Block*> world_gen::getChunk(int x,int y, int z){//gets blocks of chunk
     std::vector<Block*> out;
     std::vector<int> height = getHeights(x,z);
@@ -22,18 +36,19 @@ std::vector<Block*> world_gen::getChunk(int x,int y, int z){//gets blocks of chu
                         out.push_back(new Block(glm::vec3(i,j,k),GRASS));
                     else
                     {
-                        out.push_back(new Block(glm::vec3(i,j,k),SNOW));
+                        out.push_back(new Block(glm::vec3(i,j,k),B_SNOW));
                     }
                     
                 }else{
                     //fill lower heights with water
-                    out.push_back(new Block(glm::vec3(i,j,k),AIR));
+                    out.push_back(new Block(glm::vec3(i,j,k),B_AIR));
                 }
             }
         }
     }
     return out;
 }
+*/
 //memory layout
 /*
 z --->
@@ -44,6 +59,10 @@ x
 \/
 
 */
+
+/*
+
+
 std::vector<int> world_gen::getHeights(int x, int z){
     std::vector<int> out;
     out.reserve(chunkSize*chunkSize);
@@ -101,4 +120,4 @@ int world_gen::getNoise(int x, int z, float scale){
                 z1,z2,j_f/scale,ya,yb,yc,yd);
     return rel;
 }
-
+*/

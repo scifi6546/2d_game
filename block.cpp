@@ -1,7 +1,7 @@
-#include "block.h"
+#include "block.hpp"
 #include "texture.h"
 #include "physics.h"
-#include "tile.h"
+//#include "tile.hpp"
 #include "loadfile.h"
 #include <stdlib.h> 
 #include <iostream>
@@ -9,12 +9,12 @@
 
 std::vector<RunTimeModel>models;
 TileMesh tileMesh;
-void printTileMap(tileMap in,std::vector<int> number){
+void printTileMap(TileMap in,std::vector<int> number){
     printf("tile map:\n\n");
     printf("tilemap.width: %i, tilemap.height: %i\n",in.width,in.height);
-    printf("tileMap.size(): %i\n",(int) in.tileMap.size());
-    for(int i =0;i<in.tileMap.size();i++){
-        printf("(%i,%i,%i) ",(int) in.tileMap[i],in.heights[i],number[i]);
+    printf("tileMap.size(): %i\n",(int) in.map.size());
+    for(int i =0;i<in.map.size();i++){
+        printf("(%i,%i,%i) ",(int) in.map[i],in.heights[i],number[i]);
         //std::cout<<in.tileMap[i];
         if(((i+1)%(in.width))==0&&i>0){
             printf("\n");
@@ -56,8 +56,9 @@ Model TileMesh::getModel(){
     return model[0];
 }
 Chunk::Chunk(){
+
     this->root_pos=glm::vec3(0.0,0.0,0.0);
-    tileMap temp = this->loadTiles("./maps/default.map");
+    TileMap temp = this->loadTiles("./maps/default.map");
     
     std::vector<int> height = this->genHeights(temp);
     printTileMap(temp,height);
@@ -65,12 +66,13 @@ Chunk::Chunk(){
     
     this->tiles.reserve(chunkSize*chunkSize);
     this->setMeshes();
+    
 }
 //still needs to be tested almost garuenteed to crash
-std::vector<int> Chunk::genHeights(tileMap in){
+std::vector<int> Chunk::genHeights(TileMap in){
     std::vector<int> out;
     int tempH;
-    for(int i =0;i<in.tileMap.size();i++){
+    for(int i =0;i<in.map.size();i++){
         int temp=0;
         if(i-in.width>=0){
             if(in.heights[i-in.width]==in.heights[i]){
@@ -80,7 +82,7 @@ std::vector<int> Chunk::genHeights(tileMap in){
             temp+=1;
         }
         if(i-1>=0){
-            if(in.heights[i-1]==in.tileMap[i]){
+            if(in.heights[i-1]==in.map[i]){
                 temp+=10;
             }
         }else{
@@ -106,9 +108,10 @@ std::vector<int> Chunk::genHeights(tileMap in){
     }
     return out;
 }
-tileMap Chunk::loadTiles(std::string file){
+TileMap Chunk::loadTiles(std::string file){
+  
     std::string map = loadFile(file);
-    tileMap out;
+    TileMap out;
     char lastChar = map[0];//stores last important charecter
     std::string currentNum;
     int temp_number;
@@ -135,7 +138,7 @@ tileMap Chunk::loadTiles(std::string file){
         if(map[i]=='('||map[i]==','||map[i]==')'||map[i]=='\n'||map[i]==' '){
                 
             if(map[i]==')'){
-                out.tileMap.push_back((TileTypes)tempTile);
+                out.map.push_back((TileTypes)tempTile);
                 int tileHeight=temp_number;
                 out.tilePos.push_back(glm::vec3(x,temp_bottom,z));
                 out.heights.push_back(temp_top-temp_bottom);
@@ -158,25 +161,26 @@ tileMap Chunk::loadTiles(std::string file){
     out.width=tempWidth;
     out.height=x+1;
     return out;
+
 }
 
-void Chunk::makeMap(tileMap in,std::vector<int> number){
-    for(int i=0;i<in.tileMap.size();i++){
-        if(in.tileMap[i]==GRASS){
+void Chunk::makeMap(TileMap in,std::vector<int> number){
+    for(int i=0;i<in.map.size();i++){
+        if(in.map[i]==GRASS){
              this->tiles.push_back(Grass(in.tilePos[i],in.heights[i],number[i]));
         }
-        if(in.tileMap[i]==ROCK){
+        if(in.map[i]==ROCK){
              this->tiles.push_back(Rock(in.tilePos[i],in.heights[i],number[i]));
         }
     }
 }
 void Chunk::setMeshes(){
-    this->mesh = Model(); 
+    mesh = Model(); 
     for(int i = 0; i<tiles.size();i++){
         //printf("texture_num: %i\n",tiles[i].textureNum);
-        this->mesh.add(tiles[i].getModel(),tiles[i].pos,tiles[i].textureNum);
+        mesh.add(tiles[i].getModel(),tiles[i].pos,tiles[i].textureNum);
     }
-    std::vector<Model> temp = {this->mesh};
+    std::vector<Model> temp = {mesh};
     runModel = initMesh(temp);
 }
 void Chunk::draw(){

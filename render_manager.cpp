@@ -1,4 +1,4 @@
-#include "game_engine.h"
+#include "game_engine.hpp"
 
 #include "render_manager.h"
 unsigned int depthMapFBO;//depth map frame buffer

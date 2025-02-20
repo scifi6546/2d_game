@@ -1,6 +1,9 @@
-#include "tile.h"
+#include "tile.hpp"
 #include "OBJ_Loader.h"
 #include <string>
+TileMap::TileMap() {
+
+}
 Tile::Tile(){
     //this->makeModel();
 }
@@ -51,7 +54,7 @@ Model Tile::loadMultiModel(int bottom,int top, int number){//to finish
     printf("used multi models!\n");
     Model temp;
     char tempStr[4];
-    sprintf(tempStr,"%0.4i",number);
+   
     std::string numStr = tempStr;
     for(int i =bottom;i<top;i++){
         if(i==bottom){

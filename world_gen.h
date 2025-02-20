@@ -3,9 +3,12 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <vector>
-#include "block.h"
+#include "block.hpp"
 #include "mesh.h"
 namespace world_gen{
+    /*
+    
+    
     const int WATER_LEVEL=130;
     const int SNOW_LEVEL=160;
     void init_gen();//initilizes world generator
@@ -18,5 +21,6 @@ namespace world_gen{
     float z1,float z2,float y_needed,
     float ya,float yb,float yc, float yd);
     //linear interpolation
+    */
 }
 #endif

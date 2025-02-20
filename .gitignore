@@ -9,3 +9,6 @@ core
 .project
 .vscode
 *.out
+.vs
+x64
+*.vcxproj*
